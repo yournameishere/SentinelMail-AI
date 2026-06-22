@@ -14,7 +14,7 @@ SentinelMail AI turns email automation into a controlled, auditable workflow:
 - Detects urgent, finance, personal, work, and spam messages.
 - Generates daily email digests.
 - Drafts professional replies without allowing the drafting agent to send.
-- Creates protected send and calendar requests.
+- Creates real pending approval requests from protected send and calendar commands.
 - Requires approval before state-changing work executes.
 - Produces Terminal3 SDK-backed proof objects for protected actions.
 - Stores approval and audit history with MongoDB when configured.
@@ -76,7 +76,7 @@ SDK surfaces used:
 - `buildDelegationCredential()`
 - `b64uEncodeBytes()`
 
-The app keeps API responses fast by default. Live Terminal3 handshakes are controlled by `TERMINAL3_ENABLE_LIVE_SESSION=true`; protected action signing still uses Terminal3 SDK helpers even when the live handshake is disabled.
+The app supports live Terminal3 session verification with `TERMINAL3_ENABLE_LIVE_SESSION=true` and a bounded timeout. Protected action signing uses Terminal3 SDK helpers even when the live handshake falls back locally.
 
 ## Pages
 
@@ -99,8 +99,9 @@ The app keeps API responses fast by default. Live Terminal3 handshakes are contr
 3. The server builds a protected action payload.
 4. Terminal3 SDK helpers sign the invocation envelope.
 5. The policy layer checks whether the agent has the required capability.
-6. If the action changes external state, Approval Center requires human approval.
-7. The decision and proof are written to the audit ledger.
+6. If the action changes external state, the server creates a pending Approval Center item.
+7. The operator approves or blocks the item.
+8. The decision and proof are written to the audit ledger.
 
 ## Tech Stack
 
@@ -171,6 +172,8 @@ SENTINEL_OPERATOR_TOKEN=
 SENTINEL_PUBLIC_DEMO=true
 NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS=false
 ```
+
+For the public hackathon demo, `SENTINEL_PUBLIC_DEMO=true` keeps approve/block usable without an operator token. For a private production deployment, set `SENTINEL_PUBLIC_DEMO=false`, `SENTINEL_REQUIRE_OPERATOR_TOKEN=true`, and provide `SENTINEL_OPERATOR_TOKEN`.
 
 ## Local Development
 
@@ -248,8 +251,8 @@ The latest checked build passed:
 
 ## Production Notes
 
-- `TERMINAL3_ENABLE_LIVE_SESSION` is off by default to avoid upstream handshake delays in production.
-- Terminal3 SDK signing helpers still run for protected action proofs.
+- `TERMINAL3_ENABLE_LIVE_SESSION=true` performs a live SDK handshake and DID check with a timeout cap.
+- Terminal3 SDK signing helpers still run for protected action proofs if the live session falls back.
 - Set `SENTINEL_REQUIRE_OPERATOR_TOKEN=true` for private production deployments.
 - Keep real API keys in Vercel environment variables, not in source control.
 - Demo inbox and draft data are static by design for the hackathon flow.
