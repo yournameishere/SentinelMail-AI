@@ -101,7 +101,7 @@ export function ChatConsole() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-[#FF4D00]">
                   {turn.role === "user" ? <User className="h-5 w-5" /> : <Bot className="h-5 w-5" />}
                 </div>
-                <p className="whitespace-pre-line font-mono text-sm leading-7 text-black/78">{turn.content}</p>
+                <p className="whitespace-pre-line font-mono text-sm leading-7 text-black/75">{turn.content}</p>
               </div>
             ))}
           </div>

@@ -55,7 +55,7 @@ export function Services() {
                 <Icon className="h-10 w-10 text-[#FF4D00]" />
                 <div>
                   <h3 className="font-serif text-4xl uppercase leading-none md:text-5xl">{capability.title}</h3>
-                  <p className="mt-4 max-w-3xl font-mono text-sm leading-7 text-white/68">{capability.body}</p>
+                  <p className="mt-4 max-w-3xl font-mono text-sm leading-7 text-white/70">{capability.body}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 md:justify-end">
                   {capability.tags.map((tag) => (
