@@ -53,7 +53,7 @@ export function Terminal3Status({ compact = false }: { compact?: boolean }) {
 
   if (loading) {
     return (
-      <div className="flex items-center gap-3 border-t-2 border-black py-4 font-mono text-sm uppercase">
+      <div className="flex items-center gap-3 border-y border-black/25 py-4 font-mono text-sm uppercase">
         <Loader2 className="h-5 w-5 animate-spin" />
         Terminal3 session check
       </div>
@@ -73,24 +73,24 @@ export function Terminal3Status({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <div className="border-y-2 border-black py-5">
-      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+    <div className="border-y border-black/30 py-5">
+      <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
         <div>
           <div className="flex items-center gap-3 font-mono text-xs uppercase">
             {live ? <CheckCircle2 className="h-5 w-5" /> : <ShieldAlert className="h-5 w-5" />}
             {live ? "Live Terminal3 ADK session" : "Terminal3 local verifier"}
           </div>
-          <p className="mt-3 max-w-3xl font-serif text-2xl leading-tight md:text-4xl">
+          <p className="mt-3 max-w-3xl font-mono text-sm leading-7 text-black/70">
             {live
               ? "The server authenticated with T3nClient, read the DID from the encrypted session, and loaded tenant context."
               : "The app is production-wired for T3nClient and falls back to local proof until deployment env vars are configured."}
           </p>
         </div>
 
-        <div className="grid gap-2 font-mono text-xs uppercase md:min-w-80">
+        <div className="grid gap-2 font-mono text-xs uppercase text-black/72 md:min-w-80">
           <span>Environment: {session?.environment ?? "testnet"}</span>
-          <span>DID: {session?.did ?? "unavailable"}</span>
-          <span>Namespace: {session?.tenantNamespace ?? "z:tenant:sentinelmail-agent-auth"}</span>
+          <span className="break-all">DID: {session?.did ?? "unavailable"}</span>
+          <span className="break-all">Namespace: {session?.tenantNamespace ?? "z:tenant:sentinelmail-agent-auth"}</span>
           <span>Credits: {session?.balance ?? "configure T3N_API_KEY for live usage"}</span>
           <span>Latency: {session?.latencyMs ? `${session.latencyMs}ms` : "bounded fallback"}</span>
         </div>
