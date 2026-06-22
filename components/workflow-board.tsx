@@ -16,40 +16,53 @@ export async function WorkflowBoard() {
 
   return (
     <section className="px-4 pb-24 md:px-8">
-      <div className="grid gap-12 border-y-2 border-black py-10 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="mx-auto grid max-w-7xl gap-10 border-y border-black py-10 lg:grid-cols-[minmax(0,1fr)_420px]">
         <div>
-          <h2 className="font-serif text-5xl uppercase tracking-tight md:text-7xl">Protected action flow</h2>
-          <div className="mt-10 grid gap-0">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="font-mono text-xs uppercase text-black/55">Live control path</div>
+              <h2 className="mt-2 font-serif text-4xl font-black uppercase leading-none md:text-6xl">
+                Protected action flow
+              </h2>
+            </div>
+            <p className="max-w-md font-mono text-sm leading-7 text-black/70">
+              Every protected request moves through identity, policy, approval, and audit before execution.
+            </p>
+          </div>
+
+          <div className="mt-8 divide-y divide-black/20 border-y border-black/30">
             {workflow.map((item, index) => {
               const Icon = item.icon
               return (
-                <div key={item.label} className="group flex items-center gap-5 border-t-2 border-black py-5 last:border-b-2">
-                  <span className="font-mono text-sm">{String(index + 1).padStart(2, "0")}</span>
-                  <Icon className="h-7 w-7 transition-transform group-hover:rotate-12" />
-                  <span className="font-mono text-lg uppercase">{item.label}</span>
+                <div key={item.label} className="group grid grid-cols-[44px_44px_1fr] items-center gap-4 py-5">
+                  <span className="font-mono text-sm text-black/55">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-[#FF4D00]">
+                    <Icon className="h-5 w-5 transition-transform group-hover:rotate-6" />
+                  </span>
+                  <span className="font-mono text-sm uppercase md:text-base">{item.label}</span>
                 </div>
               )
             })}
           </div>
         </div>
 
-        <div className="space-y-8">
+        <aside className="space-y-8">
           <Terminal3Status />
-          <div className="grid grid-cols-3 border-2 border-black text-center font-mono uppercase">
-            <div className="p-5">
-              <div className="font-serif text-5xl">{emails.length}</div>
-              <div className="mt-2 text-xs">emails</div>
+          <div className="grid grid-cols-3 divide-x divide-black/20 border-y border-black/30 text-center font-mono uppercase">
+            <div className="py-5">
+              <div className="font-serif text-4xl leading-none">{emails.length}</div>
+              <div className="mt-2 text-[11px] text-black/60">emails</div>
             </div>
-            <div className="border-x-2 border-black p-5">
-              <div className="font-serif text-5xl">{approvals.length}</div>
-              <div className="mt-2 text-xs">approvals</div>
+            <div className="py-5">
+              <div className="font-serif text-4xl leading-none">{approvals.length}</div>
+              <div className="mt-2 text-[11px] text-black/60">approvals</div>
             </div>
-            <div className="p-5">
-              <div className="font-serif text-5xl">{auditEvents.length}</div>
-              <div className="mt-2 text-xs">proofs</div>
+            <div className="py-5">
+              <div className="font-serif text-4xl leading-none">{auditEvents.length}</div>
+              <div className="mt-2 text-[11px] text-black/60">proofs</div>
             </div>
           </div>
-        </div>
+        </aside>
       </div>
     </section>
   )
