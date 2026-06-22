@@ -87,7 +87,7 @@ export function Terminal3Status({ compact = false }: { compact?: boolean }) {
           </p>
         </div>
 
-        <div className="grid gap-2 font-mono text-xs uppercase text-black/72 md:min-w-80">
+        <div className="grid gap-2 font-mono text-xs uppercase text-black/70 md:min-w-80">
           <span>Environment: {session?.environment ?? "testnet"}</span>
           <span className="break-all">DID: {session?.did ?? "unavailable"}</span>
           <span className="break-all">Namespace: {session?.tenantNamespace ?? "z:tenant:sentinelmail-agent-auth"}</span>
