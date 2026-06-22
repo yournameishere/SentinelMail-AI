@@ -86,13 +86,26 @@ export function ApprovalConsole() {
 
   return (
     <section className="px-4 pb-24 md:px-8">
-      <div className="grid gap-10 border-y-2 border-black py-8 lg:grid-cols-[1fr_420px]">
-        <div className="border-t-2 border-black">
+      <div className="mx-auto grid max-w-7xl gap-10 border-y border-black py-8 lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div>
+          <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="font-mono text-xs uppercase text-black/55">Operator queue</div>
+              <h2 className="mt-2 font-serif text-4xl font-black uppercase leading-none md:text-5xl">
+                Pending protected actions
+              </h2>
+            </div>
+            <p className="max-w-md font-mono text-sm leading-7 text-black/70">
+              Each action shows the requesting agent, target, risk level, and payload before execution.
+            </p>
+          </div>
+
+          <div className="border-y border-black/25">
           {error ? (
-            <div className="border-b-2 border-black py-5 font-mono text-sm uppercase text-red-700">{error}</div>
+            <div className="border-b border-black/25 py-5 font-mono text-sm uppercase text-red-700">{error}</div>
           ) : null}
           {loading ? (
-            <div className="flex items-center gap-3 border-b-2 border-black py-12 font-mono text-sm uppercase">
+            <div className="flex items-center gap-3 py-12 font-mono text-sm uppercase">
               <Loader2 className="h-5 w-5 animate-spin" />
               Loading approval queue
             </div>
@@ -100,18 +113,18 @@ export function ApprovalConsole() {
             items.map((item) => {
               const agent = getAgent(item.agentId)
               return (
-                <article key={item.id} className="border-b-2 border-black py-7">
-                  <div className="grid gap-5 md:grid-cols-[1fr_180px]">
+                <article key={item.id} className="border-b border-black/20 py-7 last:border-b-0">
+                  <div className="grid gap-6 md:grid-cols-[1fr_170px]">
                     <div>
-                      <div className="font-mono text-xs uppercase">
+                      <div className="font-mono text-xs uppercase text-black/60">
                         {agent.name} · {item.action} · {item.risk} risk
                       </div>
-                      <h2 className="mt-3 font-serif text-4xl uppercase tracking-tight md:text-6xl">{item.title}</h2>
-                      <p className="mt-2 font-mono text-sm uppercase">{item.target}</p>
-                      <div className="mt-5 grid gap-2 font-mono text-xs uppercase md:grid-cols-3">
+                      <h3 className="mt-3 font-serif text-3xl uppercase leading-none md:text-5xl">{item.title}</h3>
+                      <p className="mt-3 font-mono text-sm uppercase text-black/70">{item.target}</p>
+                      <div className="mt-5 grid gap-3 font-mono text-xs uppercase md:grid-cols-3">
                         {Object.entries(item.payload).map(([key, value]) => (
-                          <div key={key} className="border-l-2 border-black pl-3">
-                            <span className="block opacity-60">{key}</span>
+                          <div key={key} className="border-l border-black/25 pl-3">
+                            <span className="block text-black/50">{key}</span>
                             <span>{value}</span>
                           </div>
                         ))}
@@ -123,7 +136,7 @@ export function ApprovalConsole() {
                         type="button"
                         onClick={() => decide(item, true)}
                         disabled={pendingId === item.id}
-                        className="flex flex-1 items-center justify-center gap-2 rounded-full bg-black px-5 py-3 font-mono text-xs uppercase text-[#FF4D00] transition-transform hover:scale-105 disabled:cursor-wait"
+                        className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full bg-black px-5 font-mono text-xs uppercase text-[#FF4D00] transition-colors hover:bg-[#FF4D00] hover:text-black disabled:cursor-wait"
                       >
                         {pendingId === item.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                         Approve
@@ -132,7 +145,7 @@ export function ApprovalConsole() {
                         type="button"
                         onClick={() => decide(item, false)}
                         disabled={pendingId === item.id}
-                        className="flex flex-1 items-center justify-center gap-2 rounded-full border-2 border-black px-5 py-3 font-mono text-xs uppercase transition-colors hover:bg-black hover:text-[#FF4D00] disabled:cursor-wait"
+                        className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-black px-5 font-mono text-xs uppercase transition-colors hover:bg-black hover:text-[#FF4D00] disabled:cursor-wait"
                       >
                         <X className="h-4 w-4" />
                         Block
@@ -143,32 +156,33 @@ export function ApprovalConsole() {
               )
             })
           ) : (
-            <div className="border-b-2 border-black py-12">
-              <h2 className="font-serif text-5xl uppercase">Queue clear</h2>
-              <p className="mt-4 max-w-xl font-mono text-sm">
+            <div className="py-12">
+              <h3 className="font-serif text-4xl uppercase">Queue clear</h3>
+              <p className="mt-4 max-w-xl font-mono text-sm leading-7 text-black/70">
                 All pending state-changing actions have been resolved and moved into the audit flow.
               </p>
             </div>
           )}
+          </div>
         </div>
 
-        <aside className="border-l-2 border-black pl-6">
+        <aside className="border-t border-black/25 pt-6 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
           <div className="flex items-center gap-3 font-mono text-xs uppercase">
             <ShieldCheck className="h-5 w-5" />
             Execution proof
           </div>
           {activeResult ? (
-            <div className="mt-6 space-y-4 font-mono text-xs uppercase">
+            <div className="mt-6 space-y-4 font-mono text-xs uppercase text-black/75">
               <p>Status: {activeResult.status}</p>
               <p>Mode: {activeResult.proof.terminal3Mode}</p>
               <p>Proof: {activeResult.proof.proofKind}</p>
               <p className="break-all">Hash: {activeResult.proof.actionHash}</p>
               <p className="break-all">Signature: {activeResult.proof.signature}</p>
-              <p className="leading-relaxed normal-case">{activeResult.proof.reason}</p>
-              <p className="leading-relaxed normal-case">{activeResult.proof.ledger.terminal3}</p>
+              <p className="leading-6 normal-case text-black">{activeResult.proof.reason}</p>
+              <p className="leading-6 normal-case text-black">{activeResult.proof.ledger.terminal3}</p>
             </div>
           ) : (
-            <p className="mt-6 font-mono text-sm leading-relaxed">
+            <p className="mt-6 font-mono text-sm leading-7 text-black/70">
               Approve or block an action to force the Send or Calendar agent through the Terminal3 policy path.
             </p>
           )}
