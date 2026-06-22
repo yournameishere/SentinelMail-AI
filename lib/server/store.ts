@@ -38,7 +38,7 @@ export type StoredAuditEvent = AuditEvent & {
 }
 
 let mongoClientPromise: Promise<MongoClient> | null = null
-let seeded = false
+let seedDatabasePromise: Promise<void> | null = null
 
 let memoryApprovals: StoredApproval[] = seedApprovals.map((approval) => ({
   ...approval,
@@ -92,7 +92,11 @@ async function getDb(): Promise<Db | null> {
   const uri = mongoUri()
   if (!uri) return null
 
-  mongoClientPromise ??= new MongoClient(uri).connect()
+  mongoClientPromise ??= new MongoClient(uri, {
+    connectTimeoutMS: 3_000,
+    serverSelectionTimeoutMS: 3_000,
+    maxPoolSize: 5,
+  }).connect()
   const client = await mongoClientPromise
   return client.db(process.env.MONGODB_DB?.trim() || "sentinelmail_ai")
 }
@@ -107,14 +111,17 @@ async function withCollection<T>(
     await seedDatabase(db)
     return await run(db.collection(name))
   } catch {
+    mongoClientPromise = null
     return undefined
   }
 }
 
 async function seedDatabase(db: Db) {
-  if (seeded) return
-  seeded = true
+  seedDatabasePromise ??= seedDatabaseOnce(db)
+  return seedDatabasePromise
+}
 
+async function seedDatabaseOnce(db: Db) {
   const approvals = db.collection("approvals")
   const audits = db.collection("audit_events")
   const now = new Date().toISOString()
@@ -157,6 +164,44 @@ async function seedDatabase(db: Db) {
       ),
     ),
   )
+}
+
+export async function createPendingApproval(input: {
+  title: string
+  target: string
+  agentId: AgentId
+  action: AgentCapability
+  risk: ApprovalItem["risk"]
+  payload: Record<string, string>
+}) {
+  const now = new Date()
+  const approval: StoredApproval = {
+    id: `ap-${now.getTime()}-${Math.random().toString(16).slice(2, 8)}`,
+    title: input.title,
+    target: input.target,
+    agentId: input.agentId,
+    action: input.action,
+    risk: input.risk,
+    requestedAt: now.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }),
+    payload: input.payload,
+    decision: "pending",
+    createdAt: now.toISOString(),
+    updatedAt: now.toISOString(),
+  }
+
+  const inserted = await withCollection<StoredApproval>("approvals", async (collection) => {
+    await collection.insertOne(approval)
+    return approval
+  })
+
+  if (inserted) return inserted
+
+  memoryApprovals = [...memoryApprovals, approval]
+  return approval
 }
 
 export async function getPendingApprovals() {
