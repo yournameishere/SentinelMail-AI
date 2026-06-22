@@ -71,7 +71,7 @@ export interface ChatTurn {
   content: string
 }
 
-export const terminal3DidDisplay = "did:t3n:748c...44e"
+export const terminal3DidDisplay = "did:t3n:6cc3...f1e"
 
 export const agents: SentinelAgent[] = [
   {
