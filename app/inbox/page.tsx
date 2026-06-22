@@ -1,6 +1,8 @@
 import { EmailList } from "@/components/email-list"
 import { PageShell } from "@/components/page-shell"
 
+
+
 export default function InboxPage() {
   return (
     <PageShell
