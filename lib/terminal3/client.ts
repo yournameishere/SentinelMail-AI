@@ -176,11 +176,11 @@ function actionFunction(capability: AgentCapability) {
 }
 
 function withTimeout<T>(promise: Promise<T>, ms: number, label: string) {
+  let timeout: ReturnType<typeof setTimeout>
   return Promise.race<T>([
-    promise,
+    promise.finally(() => clearTimeout(timeout)),
     new Promise<T>((_, reject) => {
-      const timeout = setTimeout(() => {
-        clearTimeout(timeout)
+      timeout = setTimeout(() => {
         reject(new Error(label))
       }, ms)
     }),
