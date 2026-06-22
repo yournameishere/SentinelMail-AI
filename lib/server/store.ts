@@ -118,7 +118,12 @@ async function withCollection<T>(
 
 async function seedDatabase(db: Db) {
   seedDatabasePromise ??= seedDatabaseOnce(db)
-  return seedDatabasePromise
+  try {
+    return await seedDatabasePromise
+  } catch (error) {
+    seedDatabasePromise = null
+    throw error
+  }
 }
 
 async function seedDatabaseOnce(db: Db) {
