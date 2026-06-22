@@ -26,7 +26,7 @@ export function Navbar() {
           <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#FF4D00] text-black">
             <ShieldCheck size={23} strokeWidth={2.5} />
           </span>
-          <span className="hidden truncate rounded-full bg-white px-4 py-2 font-serif text-lg font-bold uppercase text-black sm:block md:text-xl">
+          <span className="max-w-[52vw] truncate rounded-full bg-white px-3 py-2 font-serif text-base font-bold uppercase text-black min-[420px]:text-lg md:max-w-none md:px-4 md:text-xl">
             SentinelMail AI
           </span>
         </Link>
