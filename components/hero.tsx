@@ -14,7 +14,7 @@ export function Hero() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="min-w-0 max-w-5xl"
         >
-          <h1 className="max-w-full text-balance font-serif text-4xl font-black uppercase leading-[0.9] text-black min-[420px]:text-5xl sm:text-6xl md:text-8xl lg:text-[7.25rem] xl:text-[8.35rem]">
+          <h1 className="max-w-full text-balance font-serif text-3xl font-black uppercase leading-[0.95] text-black min-[420px]:text-4xl sm:text-5xl md:text-7xl lg:text-[6rem] xl:text-[6.85rem]">
             <span className="block">SentinelMail</span>
             <span className="block">AI</span>
           </h1>
