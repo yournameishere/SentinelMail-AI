@@ -11,6 +11,7 @@ export interface Terminal3SessionResult {
   environment: "testnet" | "production"
   did: string
   expectedDid?: string
+  didMatchesExpected?: boolean
   address?: string
   nodeUrl?: string
   tenantNamespace?: string
@@ -202,6 +203,7 @@ function offlineSession(environment: Terminal3SessionResult["environment"], erro
     environment,
     did: expectedDid ?? "did:t3n:offline-sentinelmail-demo",
     expectedDid,
+    didMatchesExpected: expectedDid ? true : undefined,
     sdk: SDK_NAMES,
     error,
   }
@@ -252,6 +254,7 @@ async function resolveTerminal3Session(environment: Terminal3SessionResult["envi
   await client.handshake()
   const did = await client.authenticate(sdk.createEthAuthInput(address))
   const sessionDid = did.value
+  const didMatchesExpected = expectedDid ? sessionDid === expectedDid : undefined
   const tenant = new sdk.TenantClient({
     t3n: client,
     baseUrl: sdk.getNodeUrl(),
@@ -266,6 +269,7 @@ async function resolveTerminal3Session(environment: Terminal3SessionResult["envi
     environment,
     did: sessionDid,
     expectedDid,
+    didMatchesExpected,
     address,
     nodeUrl: sdk.getNodeUrl(),
     tenantNamespace: tenant.canonicalName("sentinelmail-agent-auth"),
@@ -273,6 +277,7 @@ async function resolveTerminal3Session(environment: Terminal3SessionResult["envi
     entries: usage?.entries.length,
     sdk: SDK_NAMES,
     latencyMs: Date.now() - startedAt,
+    error: didMatchesExpected === false ? "Authenticated Terminal3 DID does not match configured DID." : undefined,
   } satisfies Terminal3SessionResult
 }
 

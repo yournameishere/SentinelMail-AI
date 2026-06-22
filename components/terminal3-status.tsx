@@ -9,6 +9,7 @@ interface Terminal3SessionPayload {
     environment: string
     did: string
     expectedDid?: string
+    didMatchesExpected?: boolean
     nodeUrl?: string
     tenantNamespace?: string
     balance?: string
@@ -89,6 +90,9 @@ export function Terminal3Status({ compact = false }: { compact?: boolean }) {
 
         <div className="grid gap-2 font-mono text-xs uppercase text-black/70 md:min-w-80">
           <span>Environment: {session?.environment ?? "testnet"}</span>
+          {session?.didMatchesExpected !== undefined ? (
+            <span>DID match: {session.didMatchesExpected ? "yes" : "check config"}</span>
+          ) : null}
           <span className="break-all">DID: {session?.did ?? "unavailable"}</span>
           <span className="break-all">Namespace: {session?.tenantNamespace ?? "z:tenant:sentinelmail-agent-auth"}</span>
           <span>Credits: {session?.balance ?? "configure T3N_API_KEY for live usage"}</span>
