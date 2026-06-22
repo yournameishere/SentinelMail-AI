@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { runSentinelCommand } from "@/lib/sentinel-data"
-import { recordProtectedActionAudit } from "@/lib/server/store"
+import { createPendingApproval, recordProtectedActionAudit } from "@/lib/server/store"
 import { protectAgentAction } from "@/lib/terminal3/client"
 
 export const runtime = "nodejs"
@@ -26,6 +26,23 @@ export async function POST(request: Request) {
       nextAction: command.nextAction,
     },
   })
+  const queuedApproval = proof.needsApproval
+    ? await createPendingApproval({
+        title:
+          command.capability === "calendar.create"
+            ? "Approve calendar action"
+            : "Approve protected send",
+        target: message,
+        agentId: command.agentId,
+        action: command.capability,
+        risk: command.capability === "email.send" ? "medium" : "low",
+        payload: {
+          request: message,
+          terminal3: "Verify agent DID, permission scope, approval, and signed action",
+          proof: proof.actionHash,
+        },
+      })
+    : null
   await recordProtectedActionAudit(
     {
       agentId: command.agentId,
@@ -39,5 +56,6 @@ export async function POST(request: Request) {
   return NextResponse.json({
     command,
     proof,
+    queuedApproval,
   })
 }
