@@ -2,26 +2,31 @@
 
 export function Footer() {
   return (
-    <footer className="bg-background pt-20 pb-10">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center text-center">
-          <h2 className="font-serif text-[10vw] leading-none font-black uppercase mb-8 text-black">Trust the Agent</h2>
+    <footer className="bg-background px-4 pb-10 pt-20 text-black md:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-8 border-y border-black py-10 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <h2 className="font-serif text-5xl font-black uppercase leading-none md:text-7xl">Trust the agent</h2>
+            <p className="mt-5 max-w-2xl font-mono text-sm leading-7 text-black/70">
+              Run protected email commands through scoped agents, approval gates, and Terminal3-backed proof.
+            </p>
+          </div>
           <a
             href="/chat"
-            className="px-12 py-4 bg-black text-white rounded-full font-mono text-xl uppercase hover:scale-105 transition-transform"
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-black px-7 font-mono text-xs uppercase text-[#FF4D00] transition-colors hover:bg-[#FF4D00] hover:text-black"
           >
             Run a protected command
           </a>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-end mt-20 border-t-2 border-black pt-8 gap-4">
-          <div className="font-mono font-bold uppercase text-sm text-black">© 2026 SentinelMail AI</div>
-          <div className="flex gap-8">
+        <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="font-mono text-sm uppercase text-black/70">© 2026 SentinelMail AI</div>
+          <div className="flex flex-wrap gap-5">
             {["Dashboard", "Approvals", "Agents", "Audit"].map((link) => (
               <a
                 key={link}
                 href={`/${link.toLowerCase()}`}
-                className="font-mono font-bold uppercase text-sm hover:underline decoration-2 text-black"
+                className="font-mono text-sm uppercase text-black transition-colors hover:text-[#FF4D00]"
               >
                 {link}
               </a>
