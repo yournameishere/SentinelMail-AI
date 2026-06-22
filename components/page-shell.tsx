@@ -21,7 +21,7 @@ export function PageShell({ title, intro, children, inverse = false }: PageShell
               {title}
             </h1>
             {intro ? (
-              <p className="max-w-2xl font-mono text-sm leading-7 opacity-72 md:text-base">{intro}</p>
+              <p className="max-w-2xl font-mono text-sm leading-7 opacity-70 md:text-base">{intro}</p>
             ) : null}
           </div>
         </div>
