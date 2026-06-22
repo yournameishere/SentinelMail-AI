@@ -4,7 +4,7 @@ SentinelMail AI is a trusted multi-agent email secretary built for the Terminal3
 
 ## Live Links
 
--  app: https://sentinelmail-ai.vercel.app
+-  app url : https://sentinelmail-ai.vercel.app
  
 ## What The App Does
 
