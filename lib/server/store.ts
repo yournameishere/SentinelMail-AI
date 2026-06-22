@@ -52,6 +52,18 @@ let memoryAuditEvents: StoredAuditEvent[] = seedAuditEvents.map((event, index) =
   createdAt: new Date(Date.now() - (seedAuditEvents.length - index) * 60_000).toISOString(),
 }))
 
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timeout: ReturnType<typeof setTimeout>
+  return Promise.race([
+    promise.finally(() => clearTimeout(timeout)),
+    new Promise<T>((_, reject) => {
+      timeout = setTimeout(() => {
+        reject(new Error("Store operation timed out"))
+      }, ms)
+    }),
+  ])
+}
+
 function normalizeAuditStatus(status: unknown): AuditEvent["status"] {
   if (status === "success" || status === "signed" || status === "pending" || status === "blocked") return status
   if (status === "approved" || status === "allowed") return "signed"
@@ -106,10 +118,15 @@ async function withCollection<T>(
   run: (collection: Collection) => Promise<T>,
 ): Promise<T | undefined> {
   try {
-    const db = await getDb()
-    if (!db) return undefined
-    await seedDatabase(db)
-    return await run(db.collection(name))
+    return await withTimeout(
+      (async () => {
+        const db = await getDb()
+        if (!db) return undefined
+        await seedDatabase(db)
+        return await run(db.collection(name))
+      })(),
+      2_500,
+    )
   } catch {
     mongoClientPromise = null
     return undefined
