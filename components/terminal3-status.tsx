@@ -63,6 +63,7 @@ export function Terminal3Status({ compact = false }: { compact?: boolean }) {
 
   const session = payload?.session
   const live = session?.mode === "live"
+  const liveDisabled = session?.error?.toLowerCase().includes("disabled")
 
   if (compact) {
     return (
@@ -84,7 +85,9 @@ export function Terminal3Status({ compact = false }: { compact?: boolean }) {
           <p className="mt-3 max-w-3xl font-mono text-sm leading-7 text-black/70">
             {live
               ? "The server authenticated with T3nClient, read the DID from the encrypted session, and loaded tenant context."
-              : "The app is production-wired for T3nClient and falls back to local proof until deployment env vars are configured."}
+              : liveDisabled
+                ? "The app is configured with Terminal3 credentials. Live handshake is disabled for response-time stability, while SDK action signing remains active."
+                : "The app is production-wired for T3nClient and falls back to local proof until deployment env vars are configured."}
           </p>
         </div>
 
@@ -95,7 +98,7 @@ export function Terminal3Status({ compact = false }: { compact?: boolean }) {
           ) : null}
           <span className="break-all">DID: {session?.did ?? "unavailable"}</span>
           <span className="break-all">Namespace: {session?.tenantNamespace ?? "z:tenant:sentinelmail-agent-auth"}</span>
-          <span>Credits: {session?.balance ?? "configure T3N_API_KEY for live usage"}</span>
+          <span>Credits: {session?.balance ?? (liveDisabled ? "live handshake disabled" : "configure T3N_API_KEY for live usage")}</span>
           <span>Latency: {session?.latencyMs ? `${session.latencyMs}ms` : "bounded fallback"}</span>
         </div>
       </div>

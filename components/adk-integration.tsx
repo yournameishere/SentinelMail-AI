@@ -5,7 +5,7 @@ const sdkSteps = [
   {
     icon: KeyRound,
     title: "Authenticated session",
-    detail: "Server route loads WASM crypto, derives the wallet address from T3N_API_KEY, handshakes, and authenticates.",
+    detail: "Server route loads WASM crypto, derives the wallet address from T3N_API_KEY, and can run a bounded live T3nClient handshake when enabled.",
   },
   {
     icon: ShieldCheck,
