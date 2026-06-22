@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   generator: "SentinelMail AI",
   keywords: ["Terminal3", "Agent Auth SDK", "AI email agent", "approval workflow", "audit trail"],
   authors: [{ name: "SentinelMail AI" }],
-  metadataBase: new URL("https://frontend-n2azp871l-nikkus-projects-d0d225f5.vercel.app"),
+  metadataBase: new URL("https://sentinelmail-ai.vercel.app"),
   openGraph: {
     title: "SentinelMail AI",
     description:
