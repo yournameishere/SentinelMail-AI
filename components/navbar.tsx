@@ -21,23 +21,23 @@ export function Navbar() {
 
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 px-4 py-4 md:px-8">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 border-b border-black/15 bg-background/95 pb-4 backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full border border-black bg-black/95 p-2 shadow-lg backdrop-blur-md">
         <Link href="/" className="flex min-w-0 items-center gap-3">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black text-[#FF4D00]">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#FF4D00] text-black">
             <ShieldCheck size={23} strokeWidth={2.5} />
           </span>
-          <span className="truncate font-serif text-xl font-bold uppercase text-black md:text-2xl">
+          <span className="hidden truncate rounded-full bg-white px-4 py-2 font-serif text-lg font-bold uppercase text-black sm:block md:text-xl">
             SentinelMail AI
           </span>
         </Link>
 
-        <div className="hidden items-center gap-1 rounded-full border border-black/10 bg-white/70 p-1 backdrop-blur-sm md:flex">
+        <div className="hidden items-center gap-1 rounded-full bg-white/10 p-1 md:flex">
           {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
               className={`rounded-full px-3 py-2 font-mono text-[11px] uppercase transition-colors lg:px-4 ${
-                pathname === item.href ? "bg-black text-[#FF4D00]" : "bg-transparent text-black/70 hover:bg-black hover:text-[#FF4D00]"
+                pathname === item.href ? "bg-white text-black" : "bg-transparent text-white/75 hover:bg-white hover:text-black"
               }`}
             >
               {item.label}
@@ -47,7 +47,7 @@ export function Navbar() {
 
         <Link
           href="/adk"
-          className="hidden min-h-10 items-center rounded-full border border-black bg-black px-5 font-mono text-xs uppercase text-[#FF4D00] transition-colors hover:bg-[#FF4D00] hover:text-black md:inline-flex"
+          className="hidden min-h-10 items-center rounded-full bg-[#FF4D00] px-5 font-mono text-xs uppercase text-black transition-colors hover:bg-white md:inline-flex"
         >
           Terminal3 verified
         </Link>
@@ -55,7 +55,7 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
-          className="rounded-full bg-black p-3 text-[#FF4D00] md:hidden"
+          className="rounded-full bg-white p-3 text-black md:hidden"
           aria-label="Toggle navigation"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
