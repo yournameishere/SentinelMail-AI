@@ -11,6 +11,11 @@ interface CommandResponse {
     response: string
     nextAction: string
   }
+  queuedApproval?: {
+    id: string
+    title: string
+    requestedAt: string
+  } | null
   proof: {
     authorized: boolean
     needsApproval: boolean
@@ -60,7 +65,11 @@ export function ChatConsole() {
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: `${data.command.title}\n\n${data.command.response}\n\nNext: ${data.command.nextAction}`,
+          content: `${data.command.title}\n\n${data.command.response}${
+            data.queuedApproval
+              ? `\n\nApproval queued: ${data.queuedApproval.title} (${data.queuedApproval.id})`
+              : ""
+          }\n\nNext: ${data.command.nextAction}`,
         },
       ])
     } catch (failure) {
