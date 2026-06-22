@@ -4,13 +4,8 @@ SentinelMail AI is a trusted multi-agent email secretary built for the Terminal3
 
 ## Live Links
 
-- Production app: https://sentinelmail-ai.vercel.app
-- Vercel deployment URL: https://frontend-2we8s01gm-nikkus-projects-d0d225f5.vercel.app
-- Terminal3: https://www.terminal3.io/
-- Terminal3 Agent Developer Kit: https://www.terminal3.io/products/agent-developer-kit
-- Terminal3 docs: https://docs.terminal3.io/developers/adk/overview/what-is-adk
-- Hackathon: https://dorahacks.io/hackathon/t3adkdevchallenge/detail
-
+-  app: https://sentinelmail-ai.vercel.app
+ 
 ## What The App Does
 
 SentinelMail AI turns email automation into a controlled, auditable workflow:
