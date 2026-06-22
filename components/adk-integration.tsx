@@ -37,43 +37,45 @@ const sdkSteps = [
 export function AdkIntegration() {
   return (
     <section className="px-4 pb-24 md:px-8">
-      <Terminal3Status />
+      <div className="mx-auto max-w-7xl">
+        <Terminal3Status />
 
-      <div className="mt-12 border-t-2 border-black">
+      <div className="mt-12 divide-y divide-black/20 border-y border-black/25">
         {sdkSteps.map((step, index) => {
           const Icon = step.icon
           return (
             <article
               key={step.title}
-              className="grid gap-5 border-b-2 border-black py-7 md:grid-cols-[80px_80px_1fr]"
+              className="grid gap-5 py-7 md:grid-cols-[70px_70px_minmax(0,1fr)]"
             >
-              <div className="font-mono text-sm">({String(index + 1).padStart(2, "0")})</div>
-              <Icon className="h-10 w-10" />
+              <div className="font-mono text-sm text-black/55">({String(index + 1).padStart(2, "0")})</div>
+              <Icon className="h-9 w-9 text-[#FF4D00]" />
               <div>
-                <h2 className="font-serif text-4xl uppercase tracking-tight md:text-6xl">{step.title}</h2>
-                <p className="mt-3 max-w-3xl font-mono text-sm leading-relaxed">{step.detail}</p>
+                <h2 className="font-serif text-3xl uppercase leading-none md:text-5xl">{step.title}</h2>
+                <p className="mt-4 max-w-3xl font-mono text-sm leading-7 text-black/70">{step.detail}</p>
               </div>
             </article>
           )
         })}
       </div>
 
-      <div className="mt-14 grid gap-8 border-y-2 border-black py-8 lg:grid-cols-2">
+      <div className="mt-14 grid gap-8 border-y border-black py-8 lg:grid-cols-2">
         <div>
-          <h2 className="font-serif text-5xl uppercase tracking-tight">SDK functions used</h2>
-          <p className="mt-4 font-mono text-sm leading-relaxed">
+          <h2 className="font-serif text-4xl uppercase leading-none">SDK functions used</h2>
+          <p className="mt-5 break-words font-mono text-sm leading-7 text-black/70">
             `T3nClient`, `TenantClient`, `setEnvironment`, `loadWasmComponent`, `eth_get_address`, `metamask_sign`,
             `createEthAuthInput`, `getNodeUrl`, `tenantDidHex`, `buildInvocationPreimage`, `signAgentInvocation`,
             `buildDelegationCredential`, `b64uEncodeBytes`, `formatTokens`.
           </p>
         </div>
         <div>
-          <h2 className="font-serif text-5xl uppercase tracking-tight">Protected demo path</h2>
-          <p className="mt-4 font-mono text-sm leading-relaxed">
+          <h2 className="font-serif text-4xl uppercase leading-none">Protected demo path</h2>
+          <p className="mt-5 font-mono text-sm leading-7 text-black/70">
             Chat creates protected actions, Approval Center executes state-changing requests, Agent Monitor proves
             scoped authorization, and Audit Ledger records the signed trail.
           </p>
         </div>
+      </div>
       </div>
     </section>
   )
