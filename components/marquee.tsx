@@ -18,7 +18,7 @@ export function Marquee({ text, direction = 1, className }: MarqueeProps) {
         transition={{ repeat: Number.POSITIVE_INFINITY, ease: "linear", duration: 20 }}
       >
         {[...Array(8)].map((_, i) => (
-          <span key={i} className="text-[10vw] font-black uppercase leading-none tracking-tighter font-serif">
+          <span key={i} className="font-serif text-6xl font-black uppercase leading-none md:text-8xl">
             {text} •
           </span>
         ))}

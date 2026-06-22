@@ -18,7 +18,7 @@ export function AgentRail() {
             <h2 className="font-serif text-5xl font-black uppercase leading-none md:text-7xl">Agent monitor</h2>
             <Lock className="hidden h-12 w-12 text-[#FF4D00] md:block" />
           </div>
-          <p className="max-w-3xl font-mono text-sm leading-7 text-white/68">
+          <p className="max-w-3xl font-mono text-sm leading-7 text-white/70">
             Each agent owns a narrow permission set. Send and calendar agents can execute only after approval and proof
             generation.
           </p>
