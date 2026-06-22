@@ -13,9 +13,18 @@ export function PageShell({ title, intro, children, inverse = false }: PageShell
   return (
     <main className={`min-h-screen ${inverse ? "bg-black text-white" : "bg-background text-black"}`}>
       <Navbar />
-      <section className="px-4 pb-10 pt-32 md:px-8">
-        <h1 className="font-serif text-[13vw] leading-[0.84] uppercase tracking-tighter md:text-[8vw]">{title}</h1>
-        {intro ? <p className="mt-8 max-w-3xl font-mono text-sm leading-relaxed md:text-base">{intro}</p> : null}
+      <section className="px-4 pb-12 pt-32 md:px-8">
+        <div className="mx-auto max-w-7xl border-b border-current/25 pb-10">
+          <div className="mb-5 font-mono text-xs uppercase opacity-60">SentinelMail workspace</div>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(320px,0.55fr)] lg:items-end">
+            <h1 className="font-serif text-5xl font-black uppercase leading-[0.92] sm:text-6xl md:text-7xl lg:text-8xl">
+              {title}
+            </h1>
+            {intro ? (
+              <p className="max-w-2xl font-mono text-sm leading-7 opacity-72 md:text-base">{intro}</p>
+            ) : null}
+          </div>
+        </div>
       </section>
       {children}
       <Footer />
