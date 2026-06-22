@@ -1,4 +1,4 @@
-# SentinelMail AI Frontend
+# SentinelMail AI  
 
 SentinelMail AI is a trusted multi-agent email secretary built for the Terminal3 Agent Auth SDK challenge. The app shows how an AI assistant can handle inbox workflows without becoming an anonymous black box: every protected action is connected to an agent identity, scoped permission, approval decision, Terminal3 proof envelope, and audit trail.
 
